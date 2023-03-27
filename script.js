@@ -12,7 +12,6 @@ function onSubmitButtonClick(){
         fetch('https://api.github.com/users/' + enterNicknameInput.value)
         .then((response) => {
             if (!response.ok) {
-                showError()
                 throw Error('This user doesnt exist')
             }
             else return response.json()
@@ -21,11 +20,11 @@ function onSubmitButtonClick(){
             generateUserHTML(data)
         })
         .catch((error) => {
-            console.warn(error)
+            showError(error)
         })
     }
     else alert('The field is empty!')
-    clearInput()
+    clearInput(enterNicknameInput)
 }
 
 function generateUserHTML(user){
@@ -41,21 +40,15 @@ function generateUserHTML(user){
     form.insertAdjacentHTML('beforeend', userTemplateHTML)
 }
 
-function clearInput(){
-    enterNicknameInput.value = ''
+function clearInput(input){
+    input.value = ''
 }
 
 function isNotEmpty (value){
     return value.trim()
 }
 
-function showError(){
+function showError(error){
     alert('Error 404!')
+    console.warn(error)
 }
-
-
-
-//   8748593
-//   MihajlovicSS
-//   volodymyr-kryvoshapov
-//   https://api.github.com/users/MihajlovicSS
